@@ -1,3 +1,5 @@
+package braydo.linktree;
+
 import java.util.ArrayList;
 public class LinkNode {
     public ArrayList<LinkNode> children;

@@ -1,3 +1,5 @@
+package braydo.linktree;
+
 public class LinkTree {
     private LinkNode root;
 

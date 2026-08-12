@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/LinkTreeProject/LinkTreeProject.iml" filepath="$PROJECT_DIR$/LinkTreeProject/LinkTreeProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/link-tree.iml" filepath="$PROJECT_DIR$/.idea/link-tree.iml" />
-    </modules>
-  </component>
-</project>
