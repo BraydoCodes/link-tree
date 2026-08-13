@@ -29,8 +29,8 @@ public class JSoupScraper implements ScrapingStrategy{
                 String absHref = link.attr("abs:href");
                 linkList.add(absHref);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new InvalidUrlException("The URL inserted did not receive a valid response");
         }
         return linkList;
     }

@@ -1,4 +1,8 @@
 package braydo.linktree;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     private static ScrapingStrategy scrapingMethod;
     private static LinkFinder linkFinder = new LinkFinder();
@@ -22,6 +26,12 @@ public class Main {
         // testing a hardcoded
         String test_url = "https://en.wikipedia.org/";
         scrapingMethod = new JSoupScraper();
-        System.out.print(linkFinder.findAllLinks(scrapingMethod, test_url));
+
+        try {
+            List<String> urls = linkFinder.findAllLinks(scrapingMethod, test_url);
+            System.out.print(urls);
+        } catch (Exception e) {
+            System.out.print(e.toString());
+        }
     }
 }
