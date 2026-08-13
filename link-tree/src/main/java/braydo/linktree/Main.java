@@ -20,8 +20,8 @@ public class Main {
         System.out.println(dNode.toString());
 
         // testing a hardcoded
-        String test_url = "";
-        scrapingMethod = new SeleniumScraper();
+        String test_url = "https://en.wikipedia.org/";
+        scrapingMethod = new JSoupScraper();
         System.out.print(linkFinder.findAllLinks(scrapingMethod, test_url));
     }
 }
