@@ -3,6 +3,9 @@ package braydo.linktree;
 import org.openqa.selenium.*; // remember to change to specifics
 import org.openqa.selenium.chrome.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 enum OptionMode {
     EAGER,
     NORMAL,
@@ -20,13 +23,13 @@ public class SeleniumScraper implements ScrapingStrategy {
     }
 
     @Override
-    public String scrapWebPage(String individualLink) {
+    public List<String> scrapWebPage(String individualLink) {
         if (isAvailable(individualLink)){
             closeCurrentConnection(currentWebDriver);
             createChromeDriver(OptionMode.NORMAL);
         }
         else {
-            return UnavailableString;
+            return List.of(UnavailableString);
         }
         return grabWebSource(individualLink);
     }
@@ -83,7 +86,12 @@ public class SeleniumScraper implements ScrapingStrategy {
         }
     }
 
-    private String grabWebSource(String url){
-        return currentWebDriver.getTitle(); // placeholder for now
+    private List<String> grabWebSource(String url){
+        List<WebElement> links = currentWebDriver.findElements(By.tagName("a"));
+        List<String> link_href = new ArrayList<>(links.size());
+        for (WebElement link : links){
+            link_href.add(link.getAttribute("href"));
+        }
+        return link_href; // placeholder for now
     }
 }
