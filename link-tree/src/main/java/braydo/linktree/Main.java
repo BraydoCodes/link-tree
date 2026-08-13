@@ -3,6 +3,7 @@ public class Main {
     public static void main(String[] args) {
         LinkNode root = new LinkNode("s");
         LinkNode n1 = new LinkNode("a");
+        System.out.print(n1.numOfChildren());
         LinkNode n2 = new LinkNode("b");
         LinkNode n3 = new LinkNode("c");
         LinkNode n4 = new LinkNode("d");

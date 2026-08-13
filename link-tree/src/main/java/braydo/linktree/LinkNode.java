@@ -14,4 +14,6 @@ public class LinkNode {
         return data;
     }
 
+    public int numOfChildren() { return children.size();}
+
 }
