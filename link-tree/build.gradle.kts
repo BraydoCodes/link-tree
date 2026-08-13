@@ -10,10 +10,10 @@ repositories {
 }
 
 dependencies {
+    implementation("org.seleniumhq.selenium:selenium-java:4.47.0")
+    testImplementation(platform("org.junit:junit-bom:6.1.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("com.titusfortner:selenium-logger:2.4.0")
-    implementation("org.seleniumhq.selenium:selenium-java:4.47.0")
 }
 
 tasks.test {
