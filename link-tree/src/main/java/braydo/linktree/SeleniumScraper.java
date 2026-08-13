@@ -3,11 +3,6 @@ package braydo.linktree;
 import org.openqa.selenium.*; // remember to change to specifics
 import org.openqa.selenium.chrome.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-
 enum OptionMode {
     EAGER,
     NORMAL,
@@ -15,7 +10,7 @@ enum OptionMode {
 }
 
 public class SeleniumScraper implements ScrapingStrategy {
-    private final String UnavailableString = String.format("This result is unavailable on the %s method.", this.toString());
+    private final String UnavailableString = String.format("This result is unavailable on the %s strategy.", this.toString());
     private WebDriver currentWebDriver;
 
     @Override
@@ -34,6 +29,11 @@ public class SeleniumScraper implements ScrapingStrategy {
             return UnavailableString;
         }
         return grabWebSource(individualLink);
+    }
+
+    @Override
+    public String toString(){
+        return "Selenium Scraper";
     }
 
     private void createChromeDriver(OptionMode mode){
@@ -74,9 +74,13 @@ public class SeleniumScraper implements ScrapingStrategy {
     }
 
     private boolean connectToWebPage(String url){
-        currentWebDriver.get(url);
         // TODO have to find a way to handle unauthorised requests
-        return true;
+        try {
+            currentWebDriver.get(url);
+            return true;
+        } catch (InvalidArgumentException e){
+            return false;
+        }
     }
 
     private String grabWebSource(String url){

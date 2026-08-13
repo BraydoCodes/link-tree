@@ -1,5 +1,8 @@
 package braydo.linktree;
 public class Main {
+    private static ScrapingStrategy scrapingMethod;
+    private static LinkFinder linkFinder = new LinkFinder();
+
     public static void main(String[] args) {
         LinkNode root = new LinkNode("s");
         LinkNode n1 = new LinkNode("a");
@@ -16,6 +19,9 @@ public class Main {
         LinkNode dNode = LinkTreeTest.getNode(root, "d");
         System.out.println(dNode.toString());
 
-
+        // testing a hardcoded
+        String test_url = "";
+        scrapingMethod = new SeleniumScraper();
+        System.out.print(linkFinder.findAllLinks(scrapingMethod, test_url));
     }
 }
