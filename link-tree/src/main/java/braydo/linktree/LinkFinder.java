@@ -1,11 +1,14 @@
 package braydo.linktree;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class LinkFinder {
 
-    public List<String> findAllLinks(ScrapingStrategy webStrategy, String url){
-            return cleanUrls(webStrategy.scrapWebPage(url));
+    public HashMap<String, List<String>> findAllLinks(ScrapingStrategy webStrategy, String url){
+        HashMap<String, List<String>> urlMapped = new HashMap<String, List<String>>();
+        urlMapped.put(url, webStrategy.scrapWebPage(url));
+        return urlMapped;
     }
     private List<String> cleanUrls(List<String> urls){
         String invalidString = "#";

@@ -1,5 +1,8 @@
 package braydo.linktree;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class LinkTree {
     private LinkNode root;
 
@@ -50,5 +53,12 @@ public class LinkTree {
         else{
             return  false;
         }
+    }
+
+    public HashMap<LinkNode, List<LinkNode>> getAllLeafParentPairings(){
+        //create a list of all 'parents' at iteration - 1 (add this variable)
+        //check the children do not have state 'cannot continue'
+        //add to the hashmap
+        return null;
     }
 }
