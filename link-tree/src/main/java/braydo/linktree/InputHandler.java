@@ -1,6 +1,8 @@
 package braydo.linktree;
 import java.util.Scanner;
-import java.net.URI;
+
+import org.apache.commons.validator.*;
+import org.apache.commons.validator.routines.UrlValidator;
 
 
 public class InputHandler {
@@ -23,12 +25,9 @@ public class InputHandler {
         }
     }
     private boolean checkURL(String stringUrl){
-        try{
-            URI uri = new URI(stringUrl);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        UrlValidator validator = new UrlValidator();
+        return validator.isValid(stringUrl);
+
     }
     private void closeScannerConnection(Scanner scanner){
         scanner.close();

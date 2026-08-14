@@ -17,28 +17,6 @@ public class Main {
         // testing
         String test_url = inputHandler.grabUserUrl(urlPrompt);
         graphManager.createGraph(test_url);
-        scrapingMethod = new JSoupScraper();
-        boolean canContinuePopulation = graphManager.checkSize();
 
-        HashMap<String, List<String>> urls = new HashMap<String, List<String>>();
-        while (canContinuePopulation){
-            canContinuePopulation = graphManager.checkSize();
-
-            if (urls.isEmpty()){
-                urls = linkFinder.findAllLinks(scrapingMethod, test_url);
-            }
-
-            try {
-                urls = linkFinder.findAllLinks(scrapingMethod, test_url);
-                System.out.print(urls);
-            } catch (Exception e) {
-                System.out.print(e.toString());
-            }
-
-            for (HashMap.Entry<String, List<String>> urlMap :
-                    urls.entrySet()) {
-                graphManager.addChildren(urlMap.getKey(), urlMap.getValue());
-            }
-        }
     }
 }
