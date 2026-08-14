@@ -10,20 +10,24 @@ public class LinkTree {
         return root;
     }
     // need to check for null on operations involving this function
-    public LinkNode getNode(LinkNode node, String search){
+    private LinkNode getChildren(LinkNode node, String search){
         if(search.equals(node.toString())){
             return node;
         }
         for (int i = 0; i < node.children.size(); i++){
-            if(checkNodeToData(getNode(node.children.get(i),search),search)){
+            if(checkNodeToData(getChildren(node.children.get(i),search),search)){
                 return node.children.get(i);
             }
         }
         return null;
     }
 
-    public boolean addNode(LinkNode node, LinkNode previousNode) {
-        previousNode.children.add(node);
+    public LinkNode getNode(String search) {
+        return getChildren(root, search);
+    }
+
+    public boolean addNode(String nodeData, LinkNode previousNode) {
+        previousNode.children.add(new LinkNode(nodeData));
         return true;
     }
 
@@ -33,7 +37,7 @@ public class LinkTree {
         }
         for (int i = 0; i < node.children.size(); i++){
             String search = node.toString();
-            if(checkNodeToData(getNode(node.children.get(i),search),search)){
+            if(checkNodeToData(getChildren(node.children.get(i),search),search)){
                 return i;
             }
         }

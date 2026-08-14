@@ -47,9 +47,9 @@ public class TestLink {
     public void testGetters(){
         assertEquals(l1, lt1.getRoot());
 
-        assertEquals(l2, lt1.getNode(l1,link2));
-        assertEquals(l3, lt1.getNode(l2,link3));
-        assertEquals(l4, lt1.getNode(l2,link1));
+        assertEquals(l2, lt1.getNode(link2));
+        assertEquals(l3, lt1.getNode(link3));
+        assertEquals(l4, lt1.getNode(link1));
     }
     @Test
     public void testLayerCount(){
