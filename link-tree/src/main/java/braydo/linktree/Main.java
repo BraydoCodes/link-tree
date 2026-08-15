@@ -13,7 +13,9 @@ public class Main {
 
         // testing
         String test_url = inputHandler.grabUserUrl(urlPrompt);
+        graphManager.setDomainName(inputHandler.getURLDomain(test_url));
         graphManager.createGraph(test_url);
+
 
     }
 }

@@ -19,23 +19,16 @@ public class GraphManager { ;
             return false;
         }
     }
+    
     public LinkTree createGraph(String startingUrl){
         createGraphTree(startingUrl);
         linkTree.createNextChildren(linkTree.getRoot());
         return linkTree;
     }
-    private boolean updateLinkTree(List<String> urls, String originalLink){
-        for(String link : urls) {
-            linkTree.addNode(link, linkTree.getNode(originalLink));
-        }
-        return true;
-    }
 
-    private <E> void clearHashMap(HashMap<String, List<String>> hashMap){
-        hashMap.clear();
-    }
-    private <E> boolean checkIfEmpty(List<E> list){
-        return list.isEmpty();
+    public boolean setDomainName(String domainName){
+        linkTree.setDomain(domainName);
+        return true;
     }
 
 }

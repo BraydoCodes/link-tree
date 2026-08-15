@@ -5,10 +5,10 @@ import java.util.List;
 
 public class LinkTree {
     private LinkNode root;
-    private List<LinkNode> leafNodes; // we are storing this as this is frequently needed in creation of the leaf nodes.
     private static LinkFinder linkFinder = new LinkFinder();
     private static ScrapingStrategy scrapingMethod;
     private int iteration = 0;
+    private String domainName;
 
     public LinkTree(LinkNode root, int limit){
         this.root = root;
@@ -36,6 +36,7 @@ public class LinkTree {
     public LinkNode getNode(String search) {
         return getChildren(root, search);
     }
+    public void setDomain(String domainName){ this.domainName = domainName; }
 
     public boolean addNode(String nodeData, LinkNode previousNode) {
         previousNode.children.add(new LinkNode(nodeData));
@@ -64,19 +65,13 @@ public class LinkTree {
         }
     }
 
-    public HashMap<LinkNode, List<LinkNode>> getAllLeafParentPairings(){
-        //create a list of all 'parents' at iteration - 1 (add this variable)
-        //check the children do not have state 'cannot continue'
-        //add to the hashmap
-        return null;
-    }
 
     public boolean createNextChildren(LinkNode linkNode) {
         List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
         if(iteration > layerCount(linkNode)) {
             for (String link : links) {
                 boolean added = addNode(link, linkNode);
-                if (added) {
+                if (added && link.contains(domainName)) {
                     return createNextChildren(getNode(link));
                 }
             }
