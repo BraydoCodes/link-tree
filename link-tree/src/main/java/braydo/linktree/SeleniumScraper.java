@@ -23,13 +23,14 @@ public class SeleniumScraper implements ScrapingStrategy {
     }
 
     @Override
-    public List<String> scrapWebPage(String individualLink) {
+    public ArrayList<String> scrapWebPage(String individualLink) {
         if (isAvailable(individualLink)){
             closeCurrentConnection(currentWebDriver);
             createChromeDriver(OptionMode.NORMAL);
         }
         else {
-            return List.of(UnavailableString);
+            //return List.of(UnavailableString);
+            return null;
         }
         return grabWebSource(individualLink);
     }
@@ -86,9 +87,9 @@ public class SeleniumScraper implements ScrapingStrategy {
         }
     }
 
-    private List<String> grabWebSource(String url){
-        List<WebElement> links = currentWebDriver.findElements(By.tagName("a"));
-        List<String> link_href = new ArrayList<>(links.size());
+    private ArrayList<String> grabWebSource(String url){
+        ArrayList<WebElement> links = (ArrayList<WebElement>) currentWebDriver.findElements(By.tagName("a"));
+        ArrayList<String> link_href = new ArrayList<>(links.size());
         for (WebElement link : links){
             link_href.add(link.getAttribute("href"));
         }

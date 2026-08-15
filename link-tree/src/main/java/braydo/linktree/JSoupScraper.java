@@ -16,12 +16,12 @@ public class JSoupScraper implements ScrapingStrategy{
     }
 
     @Override
-    public List<String> scrapWebPage(String individualLink) {
+    public ArrayList<String> scrapWebPage(String individualLink) {
         return handleJSoupConnection(individualLink);
     }
 
-    private List<String> handleJSoupConnection(String url){
-        List<String> linkList = new ArrayList<>();
+    private ArrayList<String> handleJSoupConnection(String url){
+        ArrayList<String> linkList = new ArrayList<>();
         try {
             Document doc = Jsoup.connect(url).get();
             Elements links = doc.select("a[href]");

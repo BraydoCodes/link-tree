@@ -1,10 +1,12 @@
 package braydo.linktree;
 
 import java.util.ArrayList;
+import java.util.List;
+
 public class LinkNode {
     public ArrayList<LinkNode> children;
     private String data;
-    private boolean endPointStatus;
+    private boolean isLeaf = true;
 
     public LinkNode(String link){
         this.data = link;
@@ -15,14 +17,15 @@ public class LinkNode {
         return data;
     }
 
-    public boolean getEndPointStatus(){
-        return endPointStatus;
+    public boolean getLeafStatus(){
+        return isLeaf;
     }
 
-    public void setEndPointStatus(boolean changedStatus){
-        this.endPointStatus = changedStatus;
+    public void setLeafStatus(boolean changedStatus){
+        this.isLeaf = changedStatus;
     }
 
     public int numOfChildren() { return children.size();}
+
 
 }

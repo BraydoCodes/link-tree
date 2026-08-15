@@ -5,9 +5,17 @@ import java.util.List;
 
 public class LinkTree {
     private LinkNode root;
+    private List<LinkNode> leafNodes; // we are storing this as this is frequently needed in creation of the leaf nodes.
+    private static LinkFinder linkFinder = new LinkFinder();
+    private static ScrapingStrategy scrapingMethod;
+    private int iteration = 0;
 
-    public LinkTree(LinkNode root){
+    public LinkTree(LinkNode root, int limit){
         this.root = root;
+        this.root.setLeafStatus(true);
+        this.iteration = limit;
+
+        scrapingMethod = new JSoupScraper();
     }
     public LinkNode getRoot(){
         return root;
@@ -31,6 +39,7 @@ public class LinkTree {
 
     public boolean addNode(String nodeData, LinkNode previousNode) {
         previousNode.children.add(new LinkNode(nodeData));
+        previousNode.setLeafStatus(false);
         return true;
     }
 
@@ -60,5 +69,18 @@ public class LinkTree {
         //check the children do not have state 'cannot continue'
         //add to the hashmap
         return null;
+    }
+
+    public boolean createNextChildren(LinkNode linkNode) {
+        List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
+        if(iteration > layerCount(linkNode)) {
+            for (String link : links) {
+                boolean added = addNode(link, linkNode);
+                if (added) {
+                    return createNextChildren(getNode(link));
+                }
+            }
+        }
+        return false;
     }
 }
