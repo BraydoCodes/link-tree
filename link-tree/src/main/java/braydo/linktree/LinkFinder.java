@@ -1,7 +1,5 @@
 package braydo.linktree;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class LinkFinder {

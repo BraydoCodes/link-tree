@@ -1,10 +1,15 @@
 package braydo.linktree;
 
-import org.openqa.selenium.*; // remember to change to specifics
-import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.InvalidArgumentException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
-import java.util.List;
 
 enum OptionMode {
     EAGER,
@@ -29,10 +34,9 @@ public class SeleniumScraper implements ScrapingStrategy {
             createChromeDriver(OptionMode.NORMAL);
         }
         else {
-            //return List.of(UnavailableString);
             return null;
         }
-        return grabWebSource(individualLink);
+        return grabWebSource();
     }
 
     @Override
@@ -87,12 +91,12 @@ public class SeleniumScraper implements ScrapingStrategy {
         }
     }
 
-    private ArrayList<String> grabWebSource(String url){
+    private ArrayList<String> grabWebSource(){
         ArrayList<WebElement> links = (ArrayList<WebElement>) currentWebDriver.findElements(By.tagName("a"));
         ArrayList<String> link_href = new ArrayList<>(links.size());
         for (WebElement link : links){
             link_href.add(link.getAttribute("href"));
         }
-        return link_href; // placeholder for now
+        return link_href;
     }
 }

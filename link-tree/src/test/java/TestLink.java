@@ -27,7 +27,7 @@ public class TestLink {
         LinkNode l6 = new LinkNode(link3);
 
         // create a tree 1 > [2 > [3, 4], 5]
-        LinkTree lt1 = new LinkTree(l1, 10);
+        LinkTree lt1 = new LinkTree(l1);
         l1.children.add(l2);
         l2.children.add(l3);
         l2.children.add(l4);

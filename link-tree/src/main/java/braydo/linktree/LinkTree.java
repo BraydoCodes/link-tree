@@ -1,21 +1,11 @@
 package braydo.linktree;
 
-import java.util.HashMap;
-import java.util.List;
-
 public class LinkTree {
     private LinkNode root;
-    private static LinkFinder linkFinder = new LinkFinder();
-    private static ScrapingStrategy scrapingMethod;
-    private int iteration = 0;
     private String domainName;
 
-    public LinkTree(LinkNode root, int limit){
+    public LinkTree(LinkNode root){
         this.root = root;
-        this.root.setLeafStatus(true);
-        this.iteration = limit;
-
-        scrapingMethod = new JSoupScraper();
     }
     public LinkNode getRoot(){
         return root;
@@ -36,11 +26,11 @@ public class LinkTree {
     public LinkNode getNode(String search) {
         return getChildren(root, search);
     }
+    public String getDomain(){ return domainName; }
     public void setDomain(String domainName){ this.domainName = domainName; }
 
     public boolean addNode(String nodeData, LinkNode previousNode) {
         previousNode.children.add(new LinkNode(nodeData));
-        previousNode.setLeafStatus(false);
         return true;
     }
 
@@ -63,19 +53,5 @@ public class LinkTree {
         else{
             return  false;
         }
-    }
-
-
-    public boolean createNextChildren(LinkNode linkNode) {
-        List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
-        if(iteration > layerCount(linkNode)) {
-            for (String link : links) {
-                boolean added = addNode(link, linkNode);
-                if (added && link.contains(domainName)) {
-                    return createNextChildren(getNode(link));
-                }
-            }
-        }
-        return false;
     }
 }

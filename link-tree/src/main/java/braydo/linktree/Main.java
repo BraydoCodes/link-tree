@@ -1,9 +1,5 @@
 package braydo.linktree;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 public class Main {
     private static final String urlPrompt = "Please enter a url: ";
 
@@ -12,10 +8,24 @@ public class Main {
         GraphManager graphManager = new GraphManager(2);
 
         // testing
-        String test_url = inputHandler.grabUserUrl(urlPrompt);
-        graphManager.setDomainName(inputHandler.getURLDomain(test_url));
+        boolean isValidURL = false;
+        String hostName = null;
+        String test_url = null;
+        while (!isValidURL && hostName == null) {
+            test_url = inputHandler.grabUserUrl(urlPrompt);
+            if(test_url != null) {
+                try {
+                    hostName = inputHandler.getURLDomain(test_url);
+                    isValidURL = true;
+                } catch (InvalidUrlException e) {
+                    System.out.println("Error Occurred for URL: " + e.getMessage());
+                }
+            }
+            else {
+                System.out.println("Please enter a valid url string");
+            }
+        }
+        inputHandler.closeScannerConnection();
         graphManager.createGraph(test_url);
-
-
     }
 }
