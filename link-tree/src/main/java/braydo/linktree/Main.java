@@ -26,6 +26,6 @@ public class Main {
             }
         }
         inputHandler.closeScannerConnection();
-        graphManager.createGraph(test_url);
+        graphManager.createGraph(test_url, hostName);
     }
 }
