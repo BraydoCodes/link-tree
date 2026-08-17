@@ -2,7 +2,7 @@ package braydo.linktree;
 
 public class LinkTree {
     private LinkNode root;
-    private String domainName;
+    private String domainName = null;
 
     public LinkTree(LinkNode root){
         this.root = root;

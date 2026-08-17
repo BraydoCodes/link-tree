@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 // provides test coverage of LinkTree and LinkNode classes
 public class TestLink {
@@ -16,6 +17,8 @@ public class TestLink {
     private static final String link1 = "javaLink";
     private static final String link2 = "gradleLink";
     private static final String link3 = "wikiLink";
+
+    private static final String linkDomain = "domain.com";
 
     @BeforeAll
     public static void setUpLinks(){
@@ -59,5 +62,10 @@ public class TestLink {
         assertEquals(2,lt1.layerCount(l4));
         assertEquals(1,lt1.layerCount(l5));
     }
-
+    @Test
+    public void testDomain(){
+        assertNull(lt1.getDomain());
+        lt1.setDomain(linkDomain);
+        assertEquals(linkDomain, lt1.getDomain());
+    }
 }
