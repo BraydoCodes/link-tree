@@ -11,6 +11,12 @@ public class LinkFinder {
     private List<String> cleanUrls(List<String> urls){
         String invalidString = "#";
         urls.removeIf(link -> link.contains(invalidString));
+        urls = removeDuplicates(urls);
         return urls;
+    }
+
+    private List<String> removeDuplicates(List<String> urls){
+        return urls.stream().distinct().toList();
+
     }
 }
