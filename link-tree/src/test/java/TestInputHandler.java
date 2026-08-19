@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class TestInputHandler {
     private static final String wikiURL = "https://www.wikipedia.org/";
@@ -35,5 +37,15 @@ public class TestInputHandler {
     public void testClosingScanner(){
         InputHandler inputHandler = createInputHandler();
         assertDoesNotThrow(inputHandler::closeScannerConnection);
+    }
+
+    @Test
+    public void testLoopingFunction(){
+        InputHandler inputHandler = createInputHandler();
+        spy(inputHandler);
+
+        inputHandler.loopUntilValidResponse();
+        //verify(inputHandler).grabUserUrl(wikiURL);
+
     }
 }

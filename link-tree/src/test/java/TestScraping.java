@@ -14,6 +14,9 @@ public class TestScraping {
     public ScrapingStrategy createJSoupScraper(){
         return new JSoupScraper();
     }
+    public ScrapingStrategy createManualScraper(){
+        return new ManualScraper();
+    }
 
     @Test
     public void testSeleniumURLs(){
@@ -34,5 +37,12 @@ public class TestScraping {
         assertNotNull(JSoup.scrapWebPage((wikiURL)));
         assertThrows(InvalidUrlException.class, () ->  { JSoup.scrapWebPage(brokenURL); });
         assertDoesNotThrow(() -> JSoup.scrapWebPage(wikiURL));
+    }
+
+    @Test
+    public void testManualScraper(){
+        ScrapingStrategy Manual = createManualScraper();
+        assertNotNull(Manual.scrapWebPage((wikiURL)));
+        assertEquals(0,Manual.scrapWebPage(brokenURL).size());
     }
 }

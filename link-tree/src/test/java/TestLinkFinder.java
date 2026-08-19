@@ -5,6 +5,7 @@ import org.mockito.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class TestLinkFinder {
     private static final String wikiURL = "https://www.wikipedia.org/";
@@ -24,4 +25,16 @@ public class TestLinkFinder {
     }
 
     // TODO write more tests with mocks.
+    @Test
+    public void testScrapingMock(){
+        ScrapingStrategy mockedStrategy = mock(ScrapingStrategy.class);
+
+        when(mockedStrategy.isAvailable((wikiURL))).thenReturn(true);
+        when(mockedStrategy.isAvailable((brokenURL))).thenReturn(false);
+
+        verify(mockedStrategy.scrapWebPage(wikiURL));
+        assertTrue(mockedStrategy.isAvailable(wikiURL));
+        verify(mockedStrategy.scrapWebPage(brokenURL));
+        assertFalse(mockedStrategy.isAvailable(wikiURL));
+    }
 }
