@@ -9,6 +9,8 @@ public class GraphManager { ;
     private static ScrapingStrategy scrapingMethod;
     private static final GraphTranslator<String> graphTranslator = new GraphTranslator<String>();
 
+    private static final int hiddenLinksThreshold = 1; // number of links that tells the system that this will require manual mode
+
     public GraphManager(int limit){
         this.limit = limit;
 
@@ -42,8 +44,7 @@ public class GraphManager { ;
 
     public boolean createNextChildren(LinkNode linkNode) {
         graphTranslator.setCurrentState(State.WORKING);
-        graphTranslator.printMultiple("Finding links on page", linkNode.toString());
-        List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
+        List<String> links = handleLinksForLinkNode(linkNode);
         graphTranslator.printList(links);
         if(limit > linkTree.layerCount(linkNode)) {
             for (String link : links) {
@@ -54,6 +55,17 @@ public class GraphManager { ;
             }
         }
         return false;
+    }
+
+    private List<String> handleLinksForLinkNode(LinkNode linkNode){
+        graphTranslator.printMultiple("Finding links on page", linkNode.toString());
+        List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
+        if(links.size() < hiddenLinksThreshold){
+            //activate user manual mode
+            scrapingMethod = new ManualScraper();
+            links = linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
+        }
+        return  links;
     }
 
 }

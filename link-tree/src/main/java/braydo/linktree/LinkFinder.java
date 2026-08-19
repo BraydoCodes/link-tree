@@ -10,8 +10,10 @@ public class LinkFinder {
     }
     private List<String> cleanUrls(List<String> urls){
         String invalidString = "#";
-        urls.removeIf(link -> link.contains(invalidString));
-        urls = removeDuplicates(urls);
+        if(!urls.isEmpty()) {
+            urls.removeIf(link -> link.contains(invalidString));
+            urls = removeDuplicates(urls);
+        }
         return urls;
     }
 
