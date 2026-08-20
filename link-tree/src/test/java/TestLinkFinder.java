@@ -2,6 +2,7 @@ import braydo.linktree.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
+import java.net.MalformedURLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,8 +14,7 @@ public class TestLinkFinder {
     @Test
     public void invalidURL(){
         LinkFinder linkFinder = new LinkFinder();
-        List<String> resultsNull = linkFinder.findAllLinks(new JSoupScraper(), brokenURL);
-        assertNull(resultsNull);
+        assertThrows(IllegalArgumentException.class, () -> linkFinder.findAllLinks(new JSoupScraper(), brokenURL));
     }
     @Test
     public void validURL(){
@@ -32,9 +32,9 @@ public class TestLinkFinder {
         when(mockedStrategy.isAvailable((wikiURL))).thenReturn(true);
         when(mockedStrategy.isAvailable((brokenURL))).thenReturn(false);
 
-        verify(mockedStrategy.scrapWebPage(wikiURL));
+        verify(mockedStrategy, never()).scrapWebPage(wikiURL);
         assertTrue(mockedStrategy.isAvailable(wikiURL));
-        verify(mockedStrategy.scrapWebPage(brokenURL));
-        assertFalse(mockedStrategy.isAvailable(wikiURL));
+        verify(mockedStrategy, never()).scrapWebPage(brokenURL);
+        assertFalse(mockedStrategy.isAvailable(brokenURL));
     }
 }

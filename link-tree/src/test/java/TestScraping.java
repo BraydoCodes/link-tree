@@ -35,7 +35,7 @@ public class TestScraping {
     public void testJSoupURLs(){
         ScrapingStrategy JSoup = createJSoupScraper();
         assertNotNull(JSoup.scrapWebPage((wikiURL)));
-        assertThrows(InvalidUrlException.class, () ->  { JSoup.scrapWebPage(brokenURL); });
+        assertThrows(IllegalArgumentException.class, () ->  { JSoup.scrapWebPage(brokenURL); });
         assertDoesNotThrow(() -> JSoup.scrapWebPage(wikiURL));
     }
 

@@ -22,10 +22,19 @@ public class TestGraphManager {
         assertEquals(wikiURL, result.getDomain());
         assertNotNull(result.getNode(wikiURL));
     }
+    @Test
+    public void testAttemptsToCreateGraphWhenURLAlreadyExists(){
+        GraphManager graphManager = createGraphManager(2);
+        graphManager.createGraph(wikiURL, wikiURL);
+        //try to create it again
+        assertNull(graphManager.createGraph(wikiURL, wikiURL));
+    }
+
 
     @Test
     public void testSetDomainName(){
         GraphManager graphManager = createGraphManager(1);
+        graphManager.createGraph(wikiURL, wikiURL); // creating a graph is necessary
         assertTrue(graphManager.setDomainName(wikiURL));
     }
 

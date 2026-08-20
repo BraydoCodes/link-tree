@@ -12,11 +12,15 @@ public class LinkTree {
     }
     // need to check for null on operations involving this function
     private LinkNode getChildren(LinkNode node, String search){
+        System.out.println(search + " searching...");
         if(search.equals(node.toString())){
+            System.out.println(search + " found node...");
             return node;
         }
         for (int i = 0; i < node.children.size(); i++){
+            System.out.println(search + " I am a children in the loop..." + i);
             if(checkNodeToData(getChildren(node.children.get(i),search),search)){
+                System.out.println(search + " I am the search...");
                 return node.children.get(i);
             }
         }
@@ -34,6 +38,7 @@ public class LinkTree {
         return true;
     }
 
+    //TODO FIX
     public int layerCount(LinkNode node){
         if(node.toString().equals(root.toString())){
             return 0;

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class GraphManager { ;
     int limit = 0;
-    LinkTree linkTree = null;
+    private LinkTree linkTree = null;
     private static LinkFinder linkFinder = new LinkFinder();
     private static ScrapingStrategy scrapingMethod;
     private static final GraphTranslator<String> graphTranslator = new GraphTranslator<String>();
@@ -30,16 +30,23 @@ public class GraphManager { ;
     }
 
     public LinkTree createGraph(String startingUrl, String domainName){
-        createGraphTree(startingUrl);
-        setDomainName(domainName);
-        createNextChildren(linkTree.getRoot());
-        return linkTree;
+        if(createGraphTree(startingUrl)) {
+            setDomainName(domainName);
+            createNextChildren(linkTree.getRoot());
+            return linkTree;
+        } else {
+            return null;
+        }
     }
 
     public boolean setDomainName(String domainName){
-        linkTree.setDomain(domainName);
-        graphTranslator.printSingle(" tree setting domain to " + domainName);
-        return true;
+        if(linkTree != null) {
+            linkTree.setDomain(domainName);
+            graphTranslator.printSingle(" tree setting domain to " + domainName);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean createNextChildren(LinkNode linkNode) {

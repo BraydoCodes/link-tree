@@ -7,9 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+//THESE TESTS WILL FAIL, I'M THINKING ABOUT HOW TO IMPLEMENT USER INPUT FOR THE REQUIRED TESTS
 public class TestInputHandler {
     private static final String wikiURL = "https://www.wikipedia.org/";
-    private static final String brokenURL = "ahtt//ww.a.acom";
+    private static final String brokenURL = "falselink";
 
     public InputHandler createInputHandler(){
         return new InputHandler();
