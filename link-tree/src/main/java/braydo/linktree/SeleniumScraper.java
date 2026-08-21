@@ -11,12 +11,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
 
+/**
+ * use this enum for different modes of selenium for optimising
+ */
 enum OptionMode {
     EAGER,
     NORMAL,
     BACKGROUND
 }
 
+/**
+ * A scraper implementation that use selenium to load and find links by 'a' tag
+ */
 public class SeleniumScraper implements ScrapingStrategy {
     private final String UnavailableString = String.format("This result is unavailable on the %s strategy.", this.toString());
     private WebDriver currentWebDriver;
@@ -57,6 +63,11 @@ public class SeleniumScraper implements ScrapingStrategy {
         this.currentWebDriver = driver;
     }
 
+    /**
+     * this is where the mode can be switched for the chrome driver, add options to load in background
+     * @param mode the enum of how fast/present the web driver should be
+     * @return the options to attach to a WebDriver
+     */
     private ChromeOptions setDriverOptions(OptionMode mode){
         ChromeOptions options = new ChromeOptions();
         // good to have arguments for all cases
@@ -91,6 +102,10 @@ public class SeleniumScraper implements ScrapingStrategy {
         }
     }
 
+    /**
+     * Finds all link elements by tag name on a loaded web driver url page
+     * @return a formed list of links (transformed from WebElements to String)
+     */
     private ArrayList<String> grabWebSource(){
         ArrayList<WebElement> links = (ArrayList<WebElement>) currentWebDriver.findElements(By.tagName("a"));
         ArrayList<String> link_href = new ArrayList<>(links.size());

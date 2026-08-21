@@ -1,8 +1,8 @@
 package braydo.linktree;
 
-
-import java.net.URI;
-
+/**
+ * the main class to start and end the program, try to reduce the amount of lines in this file
+ */
 public class Main {
 
     public static void main(String[] args) {

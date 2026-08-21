@@ -2,8 +2,11 @@ package braydo.linktree;
 
 import java.util.List;
 
+/**
+ * A GraphManagers manages a group of LinkTrees, at any given time it is subject to work on 'one' linktree at a given time
+ */
 public class GraphManager { ;
-    int limit = 0;
+    int limit = 0; // the number of iterations that the tree should be limited to.
     private LinkTree linkTree = null;
     private static LinkFinder linkFinder = new LinkFinder();
     private static ScrapingStrategy scrapingMethod;
@@ -29,6 +32,12 @@ public class GraphManager { ;
         }
     }
 
+    /**
+     * creates a graph (LinkTree), manages the process including domain setting and children creation
+     * @param startingUrl the user entered URL that ideally has links on the page
+     * @param domainName the host name to fall back on if links are found externally
+     * @return
+     */
     public LinkTree createGraph(String startingUrl, String domainName){
         if(createGraphTree(startingUrl)) {
             setDomainName(domainName);
@@ -49,6 +58,11 @@ public class GraphManager { ;
         }
     }
 
+    /**
+     * creates the children (via recursion) from a node in a LinkTree
+     * @param linkNode the node where the child node will be branched.
+     * @return boolean of whether a child was made
+     */
     public boolean createNextChildren(LinkNode linkNode) {
         graphTranslator.setCurrentState(State.WORKING);
         List<String> links = handleLinksForLinkNode(linkNode);
@@ -64,6 +78,11 @@ public class GraphManager { ;
         return false;
     }
 
+    /**
+     * Handles the process (both auto and manual) for grabbing all links on a given linknode
+     * @param linkNode, for a given link node group the child nodes (by scraping using the web scraper strategy)
+     * @return links - a list of strings with all manual links
+     */
     private List<String> handleLinksForLinkNode(LinkNode linkNode){
         graphTranslator.printMultiple("Finding links on page", linkNode.toString());
         List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.toString());

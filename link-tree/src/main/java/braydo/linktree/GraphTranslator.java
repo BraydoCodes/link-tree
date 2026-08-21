@@ -2,6 +2,10 @@ package braydo.linktree;
 
 import java.util.List;
 
+/**
+ * Translates states and messages to print for the graph creation process
+ * @param <String>
+ */
 public class GraphTranslator<String> implements Translator<String>{
     State currentState = State.CREATION;
 

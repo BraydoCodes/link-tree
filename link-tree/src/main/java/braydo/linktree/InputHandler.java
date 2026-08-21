@@ -1,13 +1,14 @@
 package braydo.linktree;
-import java.lang.invoke.StringConcatFactory;
 import java.net.URISyntaxException;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Scanner;
 import java.net.URI;
 import org.apache.commons.validator.*;
 import org.apache.commons.validator.routines.UrlValidator;
 
+/**
+ * A InputHandler is created to handle user i/o for urls
+ */
 public class InputHandler {
     private static final String defaultResponse = "default";
     private static final String defaultURL = "https://en.wikipedia.org/";
@@ -16,6 +17,10 @@ public class InputHandler {
     private String currentHostName = "";
     private Scanner scanner;
 
+    /**
+     * will continue to prompt for a valid answer (in this case a url) or until a quit request has been given
+     * @return a string that is either the valid response or 'quit'
+     */
     public String loopUntilValidResponse(){
         scanner = new Scanner(System.in);
 
@@ -52,12 +57,20 @@ public class InputHandler {
         return  currentHostName;
     }
 
-    // can throw return statement of null, must handle outside
+    /** can throw return statement of null, must handle outside
+     * @param userPrompt
+     * @return the user given url after validation
+     */
     public String grabUserUrl(String userPrompt){
         System.out.print(userPrompt);
         return grabUserInput(scanner);
     }
-    // you must handle INVALIDURLEXCEPTION on call.
+
+    /** converts a url into host format
+     * @param url a url that requires host information
+     * @return the host of a valid url
+     * @throws InvalidUrlException you must handle INVALIDURLEXCEPTION on call.
+     */
     public String getURLDomain(String url) throws InvalidUrlException {
         try{
             return new URI(url).getHost();
@@ -66,7 +79,12 @@ public class InputHandler {
             throw new InvalidUrlException("URL typed didn't have a domain name", e);
         }
     }
-    // currently defaults on typo, ideally I add something like a loop to validate
+
+    /**
+     * validates user url input and handles quits, has a special case for default too.
+     * @param urlScanner, the scanner object (must be not closed)
+     * @return the url string, quit or null |HANDLE|
+     */
     private String grabUserInput(Scanner urlScanner){
         String url = grabScannerNextLine(urlScanner);
         boolean validatedUrl = checkURL(url);
@@ -90,7 +108,6 @@ public class InputHandler {
     private boolean checkURL(String stringUrl){
         UrlValidator validator = new UrlValidator();
         return validator.isValid(stringUrl);
-
     }
     public void closeScannerConnection(){
         scanner.close();

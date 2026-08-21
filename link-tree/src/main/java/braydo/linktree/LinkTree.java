@@ -1,5 +1,9 @@
 package braydo.linktree;
 
+/**
+ * A tree-like class that hold LinkNodes
+ * @see LinkNode
+ */
 public class LinkTree {
     private LinkNode root;
     private String domainName = null;
@@ -10,6 +14,13 @@ public class LinkTree {
     public LinkNode getRoot(){
         return root;
     }
+
+    /**
+     * finds a children based on a string that matches its data
+     * @param node the node which must have children
+     * @param search the string data
+     * @return the node OR null
+     */
     // need to check for null on operations involving this function
     private LinkNode getChildren(LinkNode node, String search){
         System.out.println(search + " searching...");
@@ -26,13 +37,17 @@ public class LinkTree {
         }
         return null;
     }
-
     public LinkNode getNode(String search) {
         return getChildren(root, search);
     }
     public String getDomain(){ return domainName; }
     public void setDomain(String domainName){ this.domainName = domainName; }
 
+    /**
+     * @param nodeData the string data to create a new node
+     * @param previousNode the node that will now hold a child of this data
+     * @return true || could be case for false in future implementation
+     */
     public boolean addNode(String nodeData, LinkNode previousNode) {
         previousNode.children.add(new LinkNode(nodeData));
         return true;
