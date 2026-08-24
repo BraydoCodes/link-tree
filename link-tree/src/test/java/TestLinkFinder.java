@@ -22,6 +22,8 @@ public class TestLinkFinder {
         List<String> resultsNotNull = linkFinder.findAllLinks(new JSoupScraper(), wikiURL);
         assertNotNull(resultsNotNull);
         assertNotEquals(0, resultsNotNull.size());
+
+        assertTrue(resultsNotNull.size() <= 100); // this number can be changed based on the final class variable
     }
 
     // TODO write more tests with mocks.
