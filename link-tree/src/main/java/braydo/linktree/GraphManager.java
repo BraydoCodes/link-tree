@@ -1,5 +1,6 @@
 package braydo.linktree;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -11,6 +12,8 @@ public class GraphManager { ;
     private static LinkFinder linkFinder = new LinkFinder();
     private static ScrapingStrategy scrapingMethod;
     private static final GraphTranslator<String> graphTranslator = new GraphTranslator<String>();
+
+    private static HashSet<String> uniqueDomains = new HashSet<String>(); // this tracks all outside domains
 
     private static final int hiddenLinksThreshold = 1; // number of links that tells the system that this will require manual mode
 
@@ -73,6 +76,9 @@ public class GraphManager { ;
                 if (added && link.contains(linkTree.getDomain())) {
                     return createNextChildren(linkTree.getNode(link));
                 }
+                else {
+                    uniqueDomains.add(linkNode.toString());
+                }
             }
         }
         return false;
@@ -92,6 +98,13 @@ public class GraphManager { ;
             links = linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
         }
         return  links;
+    }
+
+    private void printAllOutsideDomains(){
+        System.out.println("Printing all outside domains.. \n");
+        for (String url : uniqueDomains) {
+            System.out.println(url);
+        }
     }
 
 }
