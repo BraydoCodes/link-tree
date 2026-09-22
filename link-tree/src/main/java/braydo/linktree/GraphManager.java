@@ -8,7 +8,8 @@ import java.util.List;
  */
 public class GraphManager { ;
     int limit = 0; // the number of iterations that the tree should be limited to.
-    private LinkTree linkTree = null;
+    private LinkTree currentLinkTree = null;
+    private List<LinkTree> linkTreeStorage = null;
     private static LinkFinder linkFinder = new LinkFinder();
     private static ScrapingStrategy scrapingMethod;
     private static final GraphTranslator<String> graphTranslator = new GraphTranslator<String>();
@@ -24,14 +25,21 @@ public class GraphManager { ;
     }
 
     private boolean createGraphTree(String startingUrl){
-        if(linkTree == null) {
-            linkTree = new LinkTree(new LinkNode(startingUrl));
+        if(currentLinkTree == null) {
+            currentLinkTree = new LinkTree(new LinkNode(startingUrl));
             graphTranslator.printMultiple("Creating LinkTree", startingUrl + " doesn't exist", "Created tree");
             return true;
         }
         else {
-            graphTranslator.printSingle(startingUrl + " already used.");
-            return false;
+            if(startingUrl.contains(currentLinkTree.getDomain()) && currentLinkTree.getNode(startingUrl) != null) {
+                graphTranslator.printSingle(startingUrl + " already used.");
+                return false;
+            }
+            addLinkTreeToStorage(currentLinkTree);
+            graphTranslator.printSingle("Moving previous link tree");
+            currentLinkTree = new LinkTree(new LinkNode(startingUrl));
+            graphTranslator.printMultiple("Creating LinkTree", startingUrl + " does exist, so it is being replaced", "Created tree");
+            return true;
         }
     }
 
@@ -44,16 +52,16 @@ public class GraphManager { ;
     public LinkTree createGraph(String startingUrl, String domainName){
         if(createGraphTree(startingUrl)) {
             setDomainName(domainName);
-            createNextChildren(linkTree.getRoot());
-            return linkTree;
+            createNextChildren(currentLinkTree.getRoot());
+            return currentLinkTree;
         } else {
             return null;
         }
     }
 
     public boolean setDomainName(String domainName){
-        if(linkTree != null) {
-            linkTree.setDomain(domainName);
+        if(currentLinkTree != null) {
+            currentLinkTree.setDomain(domainName);
             graphTranslator.printSingle(" tree setting domain to " + domainName);
             return true;
         } else {
@@ -70,11 +78,11 @@ public class GraphManager { ;
         graphTranslator.setCurrentState(State.WORKING);
         List<String> links = handleLinksForLinkNode(linkNode);
         graphTranslator.printList(links);
-        if(limit > linkTree.layerCount(linkNode)) {
+        if(limit > currentLinkTree.layerCount(linkNode)) {
             for (String link : links) {
-                boolean added = linkTree.addNode(link, linkNode);
-                if (added && link.contains(linkTree.getDomain())) {
-                    return createNextChildren(linkTree.getNode(link));
+                boolean added = currentLinkTree.addNode(link, linkNode);
+                if (added && link.contains(currentLinkTree.getDomain())) {
+                    return createNextChildren(currentLinkTree.getNode(link));
                 }
                 else {
                     uniqueDomains.add(linkNode.toString());
@@ -104,6 +112,18 @@ public class GraphManager { ;
         System.out.println("Printing all outside domains.. \n");
         for (String url : uniqueDomains) {
             System.out.println(url);
+        }
+    }
+
+    /**
+     * Moves a linktree to storage and resets the current working link tree ready to process another
+     * @param cTree, the current or currently being worked on LinkTree
+     */
+    private void addLinkTreeToStorage(LinkTree cTree) {
+        linkTreeStorage.add(cTree);
+
+        if(cTree == currentLinkTree){
+            currentLinkTree = null;
         }
     }
 
