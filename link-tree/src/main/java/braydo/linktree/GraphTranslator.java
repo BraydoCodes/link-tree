@@ -20,12 +20,12 @@ public class GraphTranslator<String> implements Translator<String>{
     public void printList(List<String> list) {
         System.out.printf(getCurrentState() + "Printing a list the size of: %d%n",list.size());
         for(String str : list)
-            System.out.print(getCurrentState()+":  " + str);
+            System.out.print("|  " + str + " ");
     }
 
     @Override
     public void printSingle(String var) {
-        System.out.println(getCurrentState() + var);
+        System.out.println(getCurrentState() + var );
     }
 
     @SafeVarargs
