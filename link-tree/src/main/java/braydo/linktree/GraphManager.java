@@ -7,7 +7,7 @@ import java.util.List;
  * A GraphManagers manages a group of LinkTrees, at any given time it is subject to work on 'one' linktree at a given time
  */
 public class GraphManager { ;
-    int limit = 0; // the number of iterations that the tree should be limited to.
+    int limit = 1; // the number of iterations that the tree should be limited to.
     private LinkTree currentLinkTree = null;
     private List<LinkTree> linkTreeStorage = null;
     private static LinkFinder linkFinder = new LinkFinder();
@@ -80,7 +80,8 @@ public class GraphManager { ;
         graphTranslator.setCurrentState(State.WORKING);
         List<String> links = handleLinksForLinkNode(linkNode);
         graphTranslator.printList(links);
-        if(limit > currentLinkTree.layerCount(linkNode)) {
+        int iteration = 1;
+        while(limit > iteration) {
             for (String link : links) {
                 boolean added = currentLinkTree.addNode(link, linkNode);
                 if (added && link.contains(currentLinkTree.getDomain())) {
@@ -90,6 +91,7 @@ public class GraphManager { ;
                     uniqueDomains.add(linkNode.getData());
                 }
             }
+            iteration++;
         }
         return false;
     }

@@ -53,19 +53,6 @@ public class LinkTree {
         return true;
     }
 
-    //TODO FIX
-    public int layerCount(LinkNode node){
-        if(node.toString().equals(root.toString())){
-            return 0;
-        }
-        for (int i = 0; i < node.children.size(); i++){
-            String search = node.toString();
-            if(checkNodeToData(getChildren(node.children.get(i),search),search)){
-                return i;
-            }
-        }
-        return -1;
-    }
     private boolean checkNodeToData(LinkNode node, String data) {
         if(node != null){
             return node.toString().equals((data));
