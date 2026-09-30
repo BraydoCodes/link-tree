@@ -74,4 +74,12 @@ public class LinkTree {
             return  false;
         }
     }
+
+    @Override
+    public String toString(){
+        if (root != null){
+            return "\n".concat(root.toString());
+        }
+        return "";
+    }
 }

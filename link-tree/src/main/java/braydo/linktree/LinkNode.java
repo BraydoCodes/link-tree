@@ -14,9 +14,25 @@ public class LinkNode {
         this.children = new ArrayList<>();
     }
 
+    @Override
     public String toString(){
-        return data;
+        String branchString = "(".concat("*").concat(this.getData()).concat("*");
+        if(!this.children.isEmpty()){
+            branchString = branchString.concat("->\n");
+        }
+        for(LinkNode node : children){
+            branchString = branchString.concat(node.toString());
+            if (node.children.isEmpty()){
+                branchString = branchString.concat("\n_______________\n");
+            } else{
+                branchString = branchString.concat("\nV\n");
+            }
+        }
+        branchString = branchString.concat(")");
+        return branchString;
     }
+
+    public String getData(){ return data; }
 
     public int numOfChildren() { return children.size();}
 

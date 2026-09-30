@@ -53,6 +53,8 @@ public class GraphManager { ;
         if(createGraphTree(startingUrl)) {
             setDomainName(domainName);
             createNextChildren(currentLinkTree.getRoot());
+
+            System.out.print(currentLinkTree.toString());
             return currentLinkTree;
         } else {
             return null;
@@ -85,7 +87,7 @@ public class GraphManager { ;
                     return createNextChildren(currentLinkTree.getNode(link));
                 }
                 else {
-                    uniqueDomains.add(linkNode.toString());
+                    uniqueDomains.add(linkNode.getData());
                 }
             }
         }
@@ -98,12 +100,12 @@ public class GraphManager { ;
      * @return links - a list of strings with all manual links
      */
     private List<String> handleLinksForLinkNode(LinkNode linkNode){
-        graphTranslator.printMultiple("Finding links on page", linkNode.toString());
-        List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
+        graphTranslator.printMultiple("Finding links on page", linkNode.getData());
+        List<String> links =  linkFinder.findAllLinks(scrapingMethod, linkNode.getData());
         if(links.size() < hiddenLinksThreshold){
             //activate user manual mode
             scrapingMethod = new ManualScraper();
-            links = linkFinder.findAllLinks(scrapingMethod, linkNode.toString());
+            links = linkFinder.findAllLinks(scrapingMethod, linkNode.getData());
         }
         return  links;
     }
