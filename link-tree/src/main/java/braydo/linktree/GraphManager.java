@@ -47,14 +47,14 @@ public class GraphManager { ;
      * creates a graph (LinkTree), manages the process including domain setting and children creation
      * @param startingUrl the user entered URL that ideally has links on the page
      * @param domainName the host name to fall back on if links are found externally
-     * @return
+     * @return the working link tree structure or null
      */
     public LinkTree createGraph(String startingUrl, String domainName){
         if(createGraphTree(startingUrl)) {
             setDomainName(domainName);
             createNextChildren(currentLinkTree.getRoot());
 
-            System.out.print(currentLinkTree.toString());
+            FileOutputter.printObjectToFile(currentLinkTree);
             return currentLinkTree;
         } else {
             return null;
