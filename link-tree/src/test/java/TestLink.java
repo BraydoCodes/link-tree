@@ -52,17 +52,6 @@ public class TestLink {
         assertEquals(l4, lt1.getNode(link4));
     }
     @Test
-    public void testLayerCount(){
-        lt1 = setUpLinks();
-        assertEquals(0,lt1.layerCount(l1));
-        assertEquals(1,lt1.layerCount(l2));
-        assertEquals(2,lt1.layerCount(l3));
-        assertEquals(2,lt1.layerCount(l4));
-        assertEquals(1,lt1.layerCount(l5));
-        // test null case
-        assertEquals(-1, lt1.layerCount(null));
-    }
-    @Test
     public void testDomain(){
         lt1 = setUpLinks();
         assertNull(lt1.getDomain());

@@ -2,6 +2,11 @@ import braydo.linktree.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
+import java.io.Serializable;
+import java.lang.reflect.Field; // this is here to test unimplemented functionality in a real capacity
+import java.util.HashMap;
+import java.util.HashSet;
+
 import static org.junit.jupiter.api.Assertions.*;
 public class TestGraphManager {
     private static final String wikiURL = "https://www.wikipedia.org/";
@@ -47,5 +52,19 @@ public class TestGraphManager {
         GraphManager graphManagerZero = createGraphManager(0);
         LinkTree resultZero = graphManagerZero.createGraph(wikiURL, wikiURL);
         assertFalse(graphManager.createNextChildren(resultZero.getRoot()));
+    }
+
+    @Test
+    public void testUniqueDomains() throws Exception{
+        GraphManager graphManager = createGraphManager(1);
+        graphManager.createGraph(wikiURL, wikiURL);
+
+        Field domainField = GraphManager.class.getDeclaredField("uniqueDomains");
+        domainField.setAccessible(true);
+        if(domainField.get(graphManager) instanceof HashSet<?> domainSet) {
+            assertFalse(domainSet.isEmpty());
+            assertTrue(domainSet.contains(wikiURL));
+        }
+
     }
 }
